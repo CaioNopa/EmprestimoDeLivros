@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EmprestimoModel>
+@*
+    IeNumerable transforma o "esqueleto" da model, percorrendo cada elemento de uma coleção, precisa disso pra usar o foreach    *@
+
+
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1> Empréstimos </h1>
+        <a class="btn btn-success mx-2" asp-controller="Emprestimo" asp-action="CadastroEmprestimo"><i class="bi bi-file-earmark-plus"></i> Cadastrar Novo Empréstimo </a>
+    </div>
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success text-black" role="alert">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger text-black" role="alert">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    <div class="table-container">
+        <table id="Emprestimos" class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">Recebedor</th>
+                    <th scope="col">Fornecedor</th>
+                    <th scope="col">Livro</th>
+                    <th scope="col">Última Alteração</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var emprestimo in Model)
+                    {
+                        <tr>
+                            <td>@emprestimo.Recebedor</td>
+                            <td>@emprestimo.Fornecedor</td>
+                            <td>@emprestimo.LivroEmprestado</td>
+                            <td>@emprestimo.DataUltimaAtualização</td>
+                            <td>
+                                <a class="btn btn-outline-dark mx-2" asp-controller="Emprestimo" asp-action="Editar" asp-route-id="@emprestimo.Id"><i class="bi bi-pencil-square"></i> Editar</a>
+                                <a class="btn btn-danger mx-2" asp-controller="Emprestimo" asp-action="Excluir" asp-route-id="@emprestimo.Id"><i class="bi bi-trash3-fill"></i> Excluir</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
